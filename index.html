@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pool Duel - Two Player Billiards</title>
+  <meta name="description" content="Pool Duel is a local two-player billiards game for quick pass-and-play 8-ball matches.">
+  <style>
+    :root {
+      --sky: #7fa5bb;
+      --table: #2f6f72;
+      --ink: #111719;
+      --muted: #536066;
+      --cream: #fbfae8;
+      --rail: #7f4437;
+      --line: rgba(17, 23, 25, 0.14);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: #f6f8f8;
+      line-height: 1.5;
+    }
+
+    .hero {
+      min-height: 92vh;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(320px, 460px);
+      gap: 56px;
+      align-items: center;
+      padding: 56px max(28px, 8vw) 72px;
+      background: var(--sky);
+      overflow: hidden;
+    }
+
+    .hero-copy {
+      max-width: 680px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(58px, 10vw, 132px);
+      line-height: 0.9;
+      letter-spacing: 0;
+      color: #fff;
+      text-transform: uppercase;
+      text-shadow: 0 10px 0 rgba(255, 255, 255, 0.24);
+    }
+
+    .tagline {
+      margin: 24px 0 0;
+      font-size: clamp(22px, 3.2vw, 38px);
+      font-weight: 800;
+      color: #fff;
+      text-transform: uppercase;
+    }
+
+    .intro {
+      margin: 24px 0 0;
+      max-width: 560px;
+      font-size: 20px;
+      color: rgba(17, 23, 25, 0.78);
+      font-weight: 650;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 34px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      padding: 0 22px;
+      border: 3px solid var(--ink);
+      border-radius: 8px;
+      background: var(--cream);
+      color: var(--ink);
+      font-weight: 800;
+      text-decoration: none;
+      box-shadow: 6px 6px 0 rgba(17, 23, 25, 0.20);
+    }
+
+    .phone {
+      position: relative;
+      width: min(100%, 420px);
+      aspect-ratio: 1125 / 2436;
+      justify-self: center;
+      border: 24px solid #050505;
+      border-radius: 58px;
+      background: var(--table);
+      box-shadow: 0 28px 0 rgba(17, 23, 25, 0.18);
+      overflow: hidden;
+    }
+
+    .table {
+      position: absolute;
+      inset: 56px 34px;
+      border: 26px solid var(--rail);
+      border-radius: 34px;
+      background: var(--table);
+    }
+
+    .pocket {
+      position: absolute;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: #000;
+    }
+
+    .p1 { left: -34px; top: -34px; }
+    .p2 { right: -34px; top: -34px; }
+    .p3 { left: -34px; top: 48%; }
+    .p4 { right: -34px; top: 48%; }
+    .p5 { left: -34px; bottom: -34px; }
+    .p6 { right: -34px; bottom: -34px; }
+
+    .ball {
+      position: absolute;
+      width: 38px;
+      height: 38px;
+      border: 7px solid #000;
+      border-radius: 50%;
+      background: #58a7ed;
+    }
+
+    .red { background: #ef635b; }
+    .black { background: #000; color: #fff; display: grid; place-items: center; font-weight: 900; font-size: 15px; }
+    .white { background: #fff; }
+    .b1 { left: 34%; top: 42%; }
+    .b2 { left: 51%; top: 47%; }
+    .b3 { left: 62%; top: 51%; }
+    .b4 { left: 45%; top: 56%; }
+    .b5 { left: 56%; top: 61%; }
+    .b6 { left: 42%; top: 35%; }
+    .b7 { left: 54%; top: 35%; }
+
+    main {
+      padding: 72px max(28px, 8vw);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 24px;
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .feature {
+      border-top: 4px solid var(--line);
+      padding-top: 18px;
+    }
+
+    .feature h2 {
+      margin: 0 0 10px;
+      font-size: 24px;
+    }
+
+    .feature p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    footer {
+      max-width: 1120px;
+      margin: 56px auto 0;
+      padding-top: 28px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+    }
+
+    footer a { color: var(--ink); font-weight: 700; }
+
+    @media (max-width: 860px) {
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 34px;
+        min-height: auto;
+        padding-top: 38px;
+      }
+
+      .phone {
+        max-width: 320px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <section class="hero">
+    <div class="hero-copy">
+      <h1>Pool Duel</h1>
+      <p class="tagline">Two Player Billiards</p>
+      <p class="intro">A quick local pool game for two players on one device. Break, aim, pocket your group, and finish the duel with the 8 ball.</p>
+      <div class="actions">
+        <a class="button" href="#features">Game Features</a>
+        <a class="button" href="privacy.html">Privacy Policy</a>
+      </div>
+    </div>
+    <div class="phone" aria-label="Pool Duel game table illustration">
+      <div class="table">
+        <span class="pocket p1"></span>
+        <span class="pocket p2"></span>
+        <span class="pocket p3"></span>
+        <span class="pocket p4"></span>
+        <span class="pocket p5"></span>
+        <span class="pocket p6"></span>
+        <span class="ball b1"></span>
+        <span class="ball red b2"></span>
+        <span class="ball black b3">8</span>
+        <span class="ball white b4"></span>
+        <span class="ball red b5"></span>
+        <span class="ball b6"></span>
+        <span class="ball red b7"></span>
+      </div>
+    </div>
+  </section>
+
+  <main id="features">
+    <div class="grid">
+      <section class="feature">
+        <h2>Pass-and-Play</h2>
+        <p>Share one device and take turns in a simple local two-player match.</p>
+      </section>
+      <section class="feature">
+        <h2>Classic 8-Ball Flow</h2>
+        <p>Break the rack, choose your group, clear the table, and pocket the 8 ball.</p>
+      </section>
+      <section class="feature">
+        <h2>Fast Offline Matches</h2>
+        <p>No account is required. Open the game and start a duel anywhere.</p>
+      </section>
+    </div>
+
+    <footer>
+      <p>© 2026 Pool Duel. For support, contact the developer through the App Store listing. Read the <a href="privacy.html">Privacy Policy</a>.</p>
+    </footer>
+  </main>
+</body>
+</html>
